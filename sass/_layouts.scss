@@ -1,0 +1,28 @@
+.container {
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    min-height: 100vh;
+}
+
+.nav {
+    width: 95%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.footer {
+    width: 95%;
+    display: flex;
+    justify-content: space-between;
+    font-size: 2rem;
+    margin-bottom: 1.5rem;
+    user-select: none;
+}
+
+.content {
+    display: grid;
+    grid-template-rows: repeat(2, minmax(10rem, 25rem));
+    grid-template-columns: repeat(2, minmax(10rem, 25rem));
+    grid-gap: 8rem;
+}
