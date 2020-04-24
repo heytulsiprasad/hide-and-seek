@@ -3,23 +3,47 @@ $(".default_option").click(function () {
 });
 
 let code = [
-    "🎉",
-    "💪",
-    "😍",
-    "🏠",
+    "💫",
     "🐶",
-    "☕",
+    "🙌",
+    "🔥",
+    "💋",
+    "⚽",
+    "🍕",
+    "🥩",
+    "🍫",
+    "🥂",
     "🤷‍♂️",
-    "😛",
-    "🎉",
-    "💪",
-    "😍",
-    "🏠",
-    "🐶",
-    "☕",
-    "🤷‍♂️",
-    "😛",
+    "🌍",
+    "🌈",
+    "🌌",
+    "🚀",
+    "🍄",
 ];
+
+// called when all stages are completed
+function hugeSuccess() {
+    // console.log("You're out of this world!");
+    $(".content").html("");
+
+    $(".game").attr("class", "success game").append(
+        `
+            <div class= "hero">
+            <p>You're out of this world! <span>🎉</span></p>
+            </div>
+            <div class="play">
+                <button>Play Again!</button>
+            </div>
+        `
+    );
+
+    $(".success button").click(function () {
+        let a = $(".select_ul li").clone()[0];
+        $(".default_option li").html(a);
+        $(".game").removeClass("success");
+        levelEasy();
+    });
+}
 
 function genNewLevel() {
     // number of items in the content div or number of boxex
@@ -78,18 +102,18 @@ function genNewLevel() {
     // this gets the clicked emoji and compares it to the previously clicked one
     // if matched returns true, else false
     // its length is never more than 2
-    let match = [];
+    let matchArr = [];
 
     function isMatch(val) {
-        if (match.length < 1) {
-            match.push(val);
+        if (matchArr.length < 1) {
+            matchArr.push(val);
             return "First";
-        } else if (match.length === 1) {
-            if (match.indexOf(val) === -1) {
-                match = [];
+        } else if (matchArr.length === 1) {
+            if (matchArr.indexOf(val) === -1) {
+                matchArr = [];
                 return false;
             } else {
-                match = [];
+                matchArr = [];
                 return true;
             }
         }
@@ -123,41 +147,106 @@ function genNewLevel() {
             } else {
                 $(this).children().addClass("hidden");
                 curKeyVal = [];
+                matchArr = [];
                 match = "First";
             }
         }
 
         if (match === "First") {
-            console.log("Waiting...");
+            // console.log("Waiting...");
         } else if (match === false) {
             setTimeout(function () {
                 curBoxEle.forEach((item) => {
                     item.addClass("hidden");
                 });
                 curBoxEle = [];
-                console.log("Try again, harder!");
+                // console.log("Try again, harder!");
             }, 200);
         } else if (match === true) {
             curBoxEle.forEach((item) => {
                 item.parent(".item").off("click");
             });
             curBoxEle = [];
-            console.log("Its a match!");
-            reloadIfDone();
+            // console.log("Its a match!");
+            showNextLevel();
         }
     });
 
-    function reloadIfDone() {
+    function showNextLevel() {
         let hiddenArr = $(".hidden");
 
         if (hiddenArr.length === 0) {
+            // console.log("Won the stage!");
             setTimeout(function () {
-                location.reload();
+                let stage = $(".default_option p").text();
+
+                if (stage === "Easy") {
+                    let a = $(".select_ul li").clone()[1];
+                    $(".default_option li").html(a);
+                    levelMedium();
+                } else if (stage === "Medium") {
+                    let b = $(".select_ul li").clone()[2];
+                    $(".default_option li").html(b);
+                    levelHard();
+                } else {
+                    hugeSuccess();
+                }
             }, 1000);
-        } else {
-            console.log("Keep hustling!");
         }
+
+        // console.log("Keep hustling!");
     }
+}
+
+function levelEasy() {
+    $(".game").html("");
+    $(".game").attr("class", "game content content-sm");
+
+    for (let i = 1; i <= 4; i++) {
+        $(".game").append(
+            `
+                    <div data-key=${i} class="item">
+                        <p class="hidden"></p>
+                    </div>
+                `
+        );
+    }
+
+    genNewLevel();
+}
+
+function levelMedium() {
+    $(".game").html("");
+    $(".game").attr("class", "game content content-md");
+
+    for (let i = 1; i <= 8; i++) {
+        $(".game").append(
+            `
+                    <div data-key=${i} class="item">
+                        <p class="hidden"></p>
+                    </div>
+                `
+        );
+    }
+
+    genNewLevel();
+}
+
+function levelHard() {
+    $(".game").html("");
+    $(".game").attr("class", "game content content-lg");
+
+    for (let i = 1; i <= 16; i++) {
+        $(".game").append(
+            `
+                    <div data-key=${i} class="item font-sm">
+                        <p class="hidden"></p>
+                    </div>
+                `
+        );
+    }
+
+    genNewLevel();
 }
 
 // selecting level of game
@@ -172,49 +261,12 @@ $(".select_ul li").click(function () {
     let level = $(this).children().text().trim();
 
     if (level === "Easy") {
-        $(".content").html("");
-        $(".content").attr("class", "content content-sm");
-
-        for (let i = 1; i <= 4; i++) {
-            $(".content").append(
-                `
-                    <div data-key=${i} class="item">
-                        <p class="hidden"></p>
-                    </div>
-                `
-            );
-        }
-
-        genNewLevel();
+        levelEasy();
     } else if (level === "Medium") {
-        $(".content").html("");
-        $(".content").attr("class", "content content-md");
-
-        for (let i = 1; i <= 8; i++) {
-            $(".content").append(
-                `
-                    <div data-key=${i} class="item">
-                        <p class="hidden"></p>
-                    </div>
-                `
-            );
-        }
-
-        genNewLevel();
+        levelMedium();
     } else if (level === "Hard") {
-        $(".content").html("");
-        $(".content").attr("class", "content content-lg");
-
-        for (let i = 1; i <= 16; i++) {
-            $(".content").append(
-                `
-                    <div data-key=${i} class="item">
-                        <p class="hidden"></p>
-                    </div>
-                `
-            );
-        }
-
-        genNewLevel();
+        levelHard();
     }
 });
+
+genNewLevel();

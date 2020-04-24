@@ -105,11 +105,11 @@
     background-color: rgba(135, 207, 235, 0.521);
     border-radius: 5rem;
     box-shadow: 0px 8px 20px 0px rgba(0, 0, 0, 0.22);
-    border: 10px solid rgba(0, 0, 0, 0.09);
+    border: 10px solid rgba(0, 0, 0, 0.1);
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 5rem;
+    font-size: 6rem;
     cursor: pointer;
 
     p {
@@ -119,4 +119,48 @@
 
 .hidden {
     display: none;
+}
+
+.correct {
+    animation-name: right;
+    animation-duration: .2s;
+    animation-iteration-count: 5;
+}
+
+.incorrect {
+    animation-name: wrong;
+    animation-duration: .2s;
+    animation-iteration-count: 5;
+}
+
+@keyframes right {
+    0% {
+        border: 10px solid rgba(0, 0, 0, 0.1);
+    }
+
+    50% {
+        border: 10px solid rgba(0, 255, 22, 0.15);
+    }
+
+    100% {
+        border: 10px solid rgba(0, 0, 0, 0.1);
+    }
+}
+
+@keyframes wrong {
+    0% {
+        border: 10px solid rgba(0, 0, 0, 0.1);
+    }
+
+    50% {
+        border: 10px solid rgba(255, 0, 0, 0.25);
+    }
+
+    100% {
+        border: 10px solid rgba(0, 0, 0, 0.1);
+    }
+}
+
+.font-sm {
+    font-size: 5rem;
 }
