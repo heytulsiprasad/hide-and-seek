@@ -1,7 +1,75 @@
-$(".default_option").click(function () {
-    $(this).parent().toggleClass("active");
+// occurs in AUTO mode
+$("#auto").click(function() {
+    // add the timer label here
+    levelEasy();
 });
 
+// occurs in MANUAL mode
+$("#man").click(function() {
+    // It creates the data "Difficulty Level" menu in top right corner
+    $("header.nav").append(
+        `
+            <div class="nav__burger">
+                <h2 class="nav__difficulty">Difficulty</h2>
+                <div class="nav__select_wrap">
+                    <ul class="default_option">
+                        <li>
+                            <div class="option easy">
+                                <p>Easy</p>
+                            </div>
+                        </li>
+                    </ul>
+                    <ul class="select_ul">
+                        <li>
+                            <div class="option easy-1">
+                                <p>Easy</p>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="option medium">
+                                <p>Medium</p>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="option hard">
+                                <p>Hard</p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        `
+    );
+
+    // This is required functionality for the dropdown menu to open i.e. slide down
+    $(".default_option").click(function () {
+        $(this).parent().toggleClass("active");
+    });
+
+    // This runs when any item from dropdown is selected
+    $(".select_ul li").click(function () {
+        // designs the dropdown menu
+        let currentEle = $(this).html();
+        $(".default_option li").html(currentEle);
+        $(this).parents(".nav__select_wrap").removeClass("active");
+
+        // code to change the level dynamically
+        let level = $(this).children().text().trim();
+
+        if (level === "Easy") {
+            levelEasy();
+        } else if (level === "Medium") {
+            levelMedium();
+        } else if (level === "Hard") {
+            levelHard();
+        }
+    });
+    
+    // This creates the square blocks for Easy Level
+    levelEasy();
+});
+
+// Emoji or Puzzle elements box
 let code = [
     "A",
     "B",
@@ -26,10 +94,10 @@ function hugeSuccess() {
     // console.log("You're out of this world!");
     $(".content").html("");
 
-    $(".game").attr("class", "success game").append(
+    $(".game").attr("class", "success content game").append(
         `
             <div class= "hero">
-            <p>You're out of this world! <span>🎉</span></p>
+                <p>You're out of this world! <span>🎉</span></p>
             </div>
             <div class="play">
                 <button>Play Again!</button>
@@ -40,13 +108,14 @@ function hugeSuccess() {
     $(".success button").click(function () {
         let a = $(".select_ul li").clone()[0];
         $(".default_option li").html(a);
-        $(".game").removeClass("success");
-        levelEasy();
+
+        // bring back website to original state
+        location.reload(true);
     });
 }
 
 function genNewLevel() {
-    // number of items in the content div or number of boxex
+    // number of items in the content div or number of boxes
     let len = $(".item").length;
 
     // number of puzzles to be done (each pair means 2 items)
@@ -178,13 +247,15 @@ function genNewLevel() {
         if (hiddenArr.length === 0) {
             // console.log("Won the stage!");
             setTimeout(function () {
-                let stage = $(".default_option p").text();
+                // let stage = $(".default_option p").text();
+                // number of items in the content div or number of boxes
+                let stage = $(".item").length;
 
-                if (stage === "Easy") {
+                if (stage === 4) {
                     let a = $(".select_ul li").clone()[1];
                     $(".default_option li").html(a);
                     levelMedium();
-                } else if (stage === "Medium") {
+                } else if (stage === 8) {
                     let b = $(".select_ul li").clone()[2];
                     $(".default_option li").html(b);
                     levelHard();
@@ -251,22 +322,7 @@ function levelHard() {
 
 // selecting level of game
 
-$(".select_ul li").click(function () {
-    // designs the dropdown menu
-    let currentEle = $(this).html();
-    $(".default_option li").html(currentEle);
-    $(this).parents(".nav__select_wrap").removeClass("active");
-
-    // code to change the level dynamically
-    let level = $(this).children().text().trim();
-
-    if (level === "Easy") {
-        levelEasy();
-    } else if (level === "Medium") {
-        levelMedium();
-    } else if (level === "Hard") {
-        levelHard();
-    }
-});
 
 genNewLevel();
+
+
