@@ -35,9 +35,9 @@
 }
 
 .content-sm {
-    grid-template-rows: repeat(2, minmax(10rem, 25rem));
-    grid-template-columns: repeat(2, minmax(10rem, 25rem));
-    grid-gap: 8rem;
+    grid-template-rows: repeat(2, minmax(10rem, 22rem));
+    grid-template-columns: repeat(2, minmax(10rem, 22rem));
+    grid-gap: 6rem;
 
     @media only screen and (max-width: 600px) {
         grid-template-rows: repeat(4, 20rem);
@@ -45,6 +45,7 @@
         grid-gap: 2rem;
     }
 }
+
 
 .content-md {
     grid-template-rows: repeat(2, minmax(10rem, 20rem));
