@@ -13,67 +13,31 @@
             rel="stylesheet"
         />
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.0/jquery.min.js"></script>
-        <script
-            src="https://kit.fontawesome.com/8221a5b36b.js"
-            crossorigin="anonymous"
-        ></script>
         <link rel="stylesheet" href="css/style.css" />
         <title>Hide and Seek</title>
     </head>
     <body class="container">
         <header class="nav">
             <h1 class="nav__heading">Hide And Seek</h1>
-            <div class="nav__burger">
-                <h2 class="nav__difficulty">Difficulty</h2>
-                <div class="nav__select_wrap">
-                    <ul class="default_option">
-                        <li>
-                            <div class="option easy">
-                                <p>Easy</p>
-                            </div>
-                        </li>
-                    </ul>
-                    <ul class="select_ul">
-                        <li>
-                            <div class="option easy-1">
-                                <p>Easy</p>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="option medium">
-                                <p>Medium</p>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="option hard">
-                                <p>Hard</p>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
-            </div>
+            <!-- Here goes the dynamic element -->
         </header>
-        <div class="content content-sm game">
-            <div data-key="1" class="item">
-                <p class="hidden"></p>
+        <div class="intro content content-sm game">
+            <div class="hero">
+                <p>How do you want to Play?</p>
             </div>
-            <div data-key="2" class="item">
-                <p class="hidden"></p>
-            </div>
-            <div data-key="3" class="item">
-                <p class="hidden"></p>
-            </div>
-            <div data-key="4" class="item">
-                <p class="hidden"></p>
-            </div>
+            <div class="play">
+                <button id="auto">Auto</button>
+                <button id="man">Manual</button>
+            </div>                
         </div>
         <footer class="footer">
             <div class="footer__text">
                 Designed with Passion
             </div>
             <div class="footer__icons">
-                <a href="https://twitter.com/tulsiprasad22" target="_blank">
-                    <i class="fab fa-twitter"></i>
+                <a class="footer__links" href="https://twitter.com/heytulsiprasad" target="_blank">
+                    <!-- Icons by FlatIcon -->
+                    <img class="logo-twitter" src="img/twitter.png">
                 </a>
             </div>
         </footer>

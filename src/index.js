@@ -1,7 +1,91 @@
-$(".default_option").click(function () {
-    $(this).parent().toggleClass("active");
+// stopwatch instance
+let watch;
+
+// occurs in AUTO mode
+$("#auto").click(function() {
+    // add the timer label here
+    levelEasy();
+
+    $("header.nav").append(
+        `
+            <div class="nav__time">
+                <h1 class="time">Time Taken</h1>
+                <div class="stopwatch">00:00.000</div>
+            </div>
+        `
+    );
+
+    watch = new Stopwatch($(".stopwatch"));
+    watch.start();
+
 });
 
+// occurs in MANUAL mode
+$("#man").click(function() {
+    // It creates the data "Difficulty Level" menu in top right corner
+    $("header.nav").append(
+        `
+            <div class="nav__burger">
+                <h2 class="nav__difficulty">Difficulty</h2>
+                <div class="nav__select_wrap">
+                    <ul class="default_option">
+                        <li>
+                            <div class="option easy">
+                                <p>Easy</p>
+                            </div>
+                        </li>
+                    </ul>
+                    <ul class="select_ul">
+                        <li>
+                            <div class="option easy-1">
+                                <p>Easy</p>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="option medium">
+                                <p>Medium</p>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="option hard">
+                                <p>Hard</p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        `
+    );
+
+    // This is required functionality for the dropdown menu to open i.e. slide down
+    $(".default_option").click(function () {
+        $(this).parent().toggleClass("active");
+    });
+
+    // This runs when any item from dropdown is selected
+    $(".select_ul li").click(function () {
+        // designs the dropdown menu
+        let currentEle = $(this).html();
+        $(".default_option li").html(currentEle);
+        $(this).parents(".nav__select_wrap").removeClass("active");
+
+        // code to change the level dynamically
+        let level = $(this).children().text().trim();
+
+        if (level === "Easy") {
+            levelEasy();
+        } else if (level === "Medium") {
+            levelMedium();
+        } else if (level === "Hard") {
+            levelHard();
+        }
+    });
+    
+    // This creates the square blocks for Easy Level
+    levelEasy();
+});
+
+// Emoji or Puzzle elements box
 let code = [
     "💫",
     "🐶",
@@ -25,11 +109,15 @@ let code = [
 function hugeSuccess() {
     // console.log("You're out of this world!");
     $(".content").html("");
+    
+    if ($(".nav__time").length !== 0) {
+        watch.stop();
+    }
 
-    $(".game").attr("class", "success game").append(
+    $(".game").attr("class", "success content game").append(
         `
             <div class= "hero">
-            <p>You're out of this world! <span>🎉</span></p>
+                <p>You're out of this world! <span>🎉</span></p>
             </div>
             <div class="play">
                 <button>Play Again!</button>
@@ -40,13 +128,15 @@ function hugeSuccess() {
     $(".success button").click(function () {
         let a = $(".select_ul li").clone()[0];
         $(".default_option li").html(a);
-        $(".game").removeClass("success");
-        levelEasy();
+
+        // bring back website to original state
+        location.reload(true);
     });
 }
 
+
 function genNewLevel() {
-    // number of items in the content div or number of boxex
+    // number of items in the content div or number of boxes
     let len = $(".item").length;
 
     // number of puzzles to be done (each pair means 2 items)
@@ -178,13 +268,15 @@ function genNewLevel() {
         if (hiddenArr.length === 0) {
             // console.log("Won the stage!");
             setTimeout(function () {
-                let stage = $(".default_option p").text();
+                // let stage = $(".default_option p").text();
+                // number of items in the content div or number of boxes
+                let stage = $(".item").length;
 
-                if (stage === "Easy") {
+                if (stage === 4) {
                     let a = $(".select_ul li").clone()[1];
                     $(".default_option li").html(a);
                     levelMedium();
-                } else if (stage === "Medium") {
+                } else if (stage === 8) {
                     let b = $(".select_ul li").clone()[2];
                     $(".default_option li").html(b);
                     levelHard();
@@ -198,9 +290,23 @@ function genNewLevel() {
     }
 }
 
+// This generates a random color on every invoke
+function getRandomColor() {
+    var letters = '0123456789ABCDEF';
+    var color = '#';
+    for (var i = 0; i < 6; i++) {
+      color += letters[Math.floor(Math.random() * 16)];
+    }
+
+    // Append value gives the required opacity to color
+    return color + "42";
+}
+
 function levelEasy() {
     $(".game").html("");
     $(".game").attr("class", "game content content-sm");
+    
+    let color = getRandomColor();
 
     for (let i = 1; i <= 4; i++) {
         $(".game").append(
@@ -212,12 +318,16 @@ function levelEasy() {
         );
     }
 
+    $(".item").css("background-color", color);
+
     genNewLevel();
 }
 
 function levelMedium() {
     $(".game").html("");
     $(".game").attr("class", "game content content-md");
+
+    let color = getRandomColor();
 
     for (let i = 1; i <= 8; i++) {
         $(".game").append(
@@ -229,12 +339,16 @@ function levelMedium() {
         );
     }
 
+    $(".item").css("background-color", color);
+
     genNewLevel();
 }
 
 function levelHard() {
     $(".game").html("");
     $(".game").attr("class", "game content content-lg");
+
+    let color = getRandomColor();
 
     for (let i = 1; i <= 16; i++) {
         $(".game").append(
@@ -246,27 +360,78 @@ function levelHard() {
         );
     }
 
+    $(".item").css("background-color", color);
+
+
     genNewLevel();
 }
 
-// selecting level of game
+/////////////////////////////////
+// Making the stopwatch
 
-$(".select_ul li").click(function () {
-    // designs the dropdown menu
-    let currentEle = $(this).html();
-    $(".default_option li").html(currentEle);
-    $(this).parents(".nav__select_wrap").removeClass("active");
+function Stopwatch(elem) {
+    let curTime = 0;
+    let interval;
+    let startTime;
 
-    // code to change the level dynamically
-    let level = $(this).children().text().trim();
-
-    if (level === "Easy") {
-        levelEasy();
-    } else if (level === "Medium") {
-        levelMedium();
-    } else if (level === "Hard") {
-        levelHard();
+    function update() {
+        if (this.isOn) {
+            curTime += difference();
+        }
+        let formattedTime = timeFormatter(curTime);
+        elem.text(`${formattedTime}`);
     }
-});
 
-genNewLevel();
+    function difference() {
+        let now = Date.now();
+        let timePassed = now - startTime;
+        startTime = now;
+        return timePassed;
+    }
+
+    function timeFormatter(timeInMs) {
+        let formatTime = new Date(timeInMs);
+        let mins = formatTime.getUTCMinutes().toString();
+        let secs = formatTime.getUTCSeconds().toString();
+        let ms = formatTime.getUTCMilliseconds().toString();
+
+        // Getting the default zeros in position
+        if (mins.length < 2) {
+            mins = `0${mins}`
+        }
+
+        if (secs.length < 2) {
+            secs = `0${secs}`
+        }
+        
+        while (ms.length < 3) {
+            ms = `0${ms}`
+        }
+
+        return `${mins}:${secs}.${ms}`
+    }
+
+    this.isOn = false;
+
+    this.start = function() {
+        if (!this.isOn) {
+            interval = setInterval(update.bind(this), 50);
+            startTime = Date.now();
+            this.isOn = true;
+        }
+    }
+
+    this.stop = function() {
+        if (this.isOn) {
+            clearInterval(interval);
+            interval = null;
+            this.isOn = false;
+        }
+    }
+
+    this.reset = function() {
+        curTime = 0;
+        update();
+    }
+}
+
