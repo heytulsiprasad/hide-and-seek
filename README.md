@@ -1,5 +1,7 @@
 # Nothing but, Pure Amusement
 
+![modes](https://i.imgur.com/DcYnNK0.png)
+
 ***Hey***
 
 Ever played the game of matching the tiles in your childhood? Yes, then its just that with a super minimal experience. 
@@ -11,6 +13,8 @@ The **Auto** mode lets you see your **time consumed** until you finish the game'
 The **Manual** mode lets you choose which **level** you want to play.
 
 There are three levels for this game, **Easy, Medium** and **Hard**. And you finish the game only after finishing the toughest level (*Hard*).
+
+![difficulty-medium](https://i.imgur.com/s8DhCT2.png)
 
 **Note**: If you want to **explore** the **SASS** code for this project, go to the **Timer** branch.
 
