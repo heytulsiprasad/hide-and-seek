@@ -110,7 +110,9 @@ function hugeSuccess() {
     // console.log("You're out of this world!");
     $(".content").html("");
     
-    watch.stop();
+    if ($(".nav__time").length !== 0) {
+        watch.stop();
+    }
 
     $(".game").attr("class", "success content game").append(
         `
