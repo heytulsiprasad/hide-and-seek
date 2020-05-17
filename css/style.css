@@ -204,11 +204,23 @@ button {
   font-size: 2.7rem; }
 
 .stopwatch {
+  height: 3rem;
+  width: 12rem;
+  text-align: center;
   font-size: 2.5rem;
   background-color: #000;
   color: #fff;
   border-radius: 10px;
   padding: 0 1.5rem; }
+
+.footer__links {
+  color: #000; }
+
+.logo-twitter {
+  height: 18px;
+  width: 18px; }
+  .logo-twitter:hover {
+    filter: contrast(0.5); }
 
 .container {
   flex-direction: column;
@@ -230,10 +242,6 @@ button {
   margin-top: 2rem;
   margin-bottom: 1.5rem;
   user-select: none; }
-  .footer a {
-    color: #000; }
-    .footer a:hover {
-      color: rgba(0, 0, 0, 0.589); }
 
 .content {
   display: grid; }

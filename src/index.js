@@ -1,7 +1,23 @@
+// stopwatch instance
+let watch;
+
 // occurs in AUTO mode
 $("#auto").click(function() {
     // add the timer label here
     levelEasy();
+
+    $("header.nav").append(
+        `
+            <div class="nav__time">
+                <h1 class="time">Time Taken</h1>
+                <div class="stopwatch">00:00.000</div>
+            </div>
+        `
+    );
+
+    watch = new Stopwatch($(".stopwatch"));
+    watch.start();
+
 });
 
 // occurs in MANUAL mode
@@ -93,6 +109,8 @@ let code = [
 function hugeSuccess() {
     // console.log("You're out of this world!");
     $(".content").html("");
+    
+    watch.stop();
 
     $(".game").attr("class", "success content game").append(
         `
@@ -325,4 +343,73 @@ function levelHard() {
 
 genNewLevel();
 
+
+/////////////////////////////////
+// Making the stopwatch
+
+function Stopwatch(elem) {
+    let curTime = 0;
+    let interval;
+    let startTime;
+
+    function update() {
+        if (this.isOn) {
+            curTime += difference();
+        }
+        let formattedTime = timeFormatter(curTime);
+        elem.text(`${formattedTime}`);
+    }
+
+    function difference() {
+        let now = Date.now();
+        let timePassed = now - startTime;
+        startTime = now;
+        return timePassed;
+    }
+
+    function timeFormatter(timeInMs) {
+        let formatTime = new Date(timeInMs);
+        let mins = formatTime.getUTCMinutes().toString();
+        let secs = formatTime.getUTCSeconds().toString();
+        let ms = formatTime.getUTCMilliseconds().toString();
+
+        // Getting the default zeros in position
+        if (mins.length < 2) {
+            mins = `0${mins}`
+        }
+
+        if (secs.length < 2) {
+            secs = `0${secs}`
+        }
+        
+        while (ms.length < 3) {
+            ms = `0${ms}`
+        }
+
+        return `${mins}:${secs}.${ms}`
+    }
+
+    this.isOn = false;
+
+    this.start = function() {
+        if (!this.isOn) {
+            interval = setInterval(update.bind(this), 50);
+            startTime = Date.now();
+            this.isOn = true;
+        }
+    }
+
+    this.stop = function() {
+        if (this.isOn) {
+            clearInterval(interval);
+            interval = null;
+            this.isOn = false;
+        }
+    }
+
+    this.reset = function() {
+        curTime = 0;
+        update();
+    }
+}
 
