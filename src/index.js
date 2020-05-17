@@ -134,6 +134,7 @@ function hugeSuccess() {
     });
 }
 
+
 function genNewLevel() {
     // number of items in the content div or number of boxes
     let len = $(".item").length;
@@ -289,9 +290,23 @@ function genNewLevel() {
     }
 }
 
+// This generates a random color on every invoke
+function getRandomColor() {
+    var letters = '0123456789ABCDEF';
+    var color = '#';
+    for (var i = 0; i < 6; i++) {
+      color += letters[Math.floor(Math.random() * 16)];
+    }
+
+    // Append value gives the required opacity to color
+    return color + "42";
+}
+
 function levelEasy() {
     $(".game").html("");
     $(".game").attr("class", "game content content-sm");
+    
+    let color = getRandomColor();
 
     for (let i = 1; i <= 4; i++) {
         $(".game").append(
@@ -303,12 +318,16 @@ function levelEasy() {
         );
     }
 
+    $(".item").css("background-color", color);
+
     genNewLevel();
 }
 
 function levelMedium() {
     $(".game").html("");
     $(".game").attr("class", "game content content-md");
+
+    let color = getRandomColor();
 
     for (let i = 1; i <= 8; i++) {
         $(".game").append(
@@ -320,12 +339,16 @@ function levelMedium() {
         );
     }
 
+    $(".item").css("background-color", color);
+
     genNewLevel();
 }
 
 function levelHard() {
     $(".game").html("");
     $(".game").attr("class", "game content content-lg");
+
+    let color = getRandomColor();
 
     for (let i = 1; i <= 16; i++) {
         $(".game").append(
@@ -337,14 +360,11 @@ function levelHard() {
         );
     }
 
+    $(".item").css("background-color", color);
+
+
     genNewLevel();
 }
-
-// selecting level of game
-
-
-genNewLevel();
-
 
 /////////////////////////////////
 // Making the stopwatch
