@@ -17,7 +17,6 @@ $("#auto").click(function() {
 
     watch = new Stopwatch($(".stopwatch"));
     watch.start();
-
 });
 
 // occurs in MANUAL mode
@@ -117,7 +116,7 @@ function hugeSuccess() {
     $(".game").attr("class", "success content game").append(
         `
             <div class= "hero">
-                <p>You're out of this world! <span>🎉</span></p>
+                <p>You're out of this world!<span>🎉</span></p>
             </div>
             <div class="play">
                 <button>Play Again!</button>

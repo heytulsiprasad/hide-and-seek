@@ -50,6 +50,12 @@
         grid-template-columns: repeat(2, minmax(10rem, 18rem));
         grid-gap: 2rem;
     }
+
+    @media only screen and (max-width: 350px) {
+        grid-template-rows: repeat(4, minmax(9rem, 13rem));
+        grid-template-columns: repeat(2, minmax(9rem, 13rem));
+        grid-gap: 1rem;
+    }
 }
 
 .content-lg {
@@ -66,22 +72,29 @@
         grid-template-rows: repeat(8, minmax(12rem, 16rem));
         grid-template-columns: repeat(2, minmax(10rem, 18rem));
     }
+    
+    @media only screen and (max-width: 350px) {
+        grid-template-rows: repeat(8, minmax(9rem, 13rem));
+        grid-template-columns: repeat(2, minmax(9rem, 13rem));
+        grid-gap: 1rem;
+    }
 }
 
 @mixin centerBlock {
     height: 25rem;
-    width: 50rem;
-    display: grid;
+    max-width: 50rem;
 }
 
 .success {
     @include centerBlock;
+    display: grid;
     grid-template-rows: 2fr 1fr;
     grid-template-columns: 1fr;
 }
 
 .intro {
     @include centerBlock();
-    grid-template-rows: repeat(2, min-content);
-    grid-template-columns: 1fr;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
 }
