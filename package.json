@@ -4,9 +4,7 @@
     "description": "",
     "main": "index.js",
     "scripts": {
-        "start": "live-server",
-        "watch:sass": "node-sass sass/main.scss css/style.css -w",
-        "dev": "npm-run-all --parallel start watch:sass"
+        "start": "live-server"
     },
     "keywords": [],
     "author": "",
